@@ -56,4 +56,40 @@ bookmarksRouter
       .json(bookmark)
   })
 
+  bookmarksRouter
+    .route('/bookmarks/:bookmark_id')
+    .get((req, res) => {
+      const { bookmark_id } = req.params;
+
+      const bookmark = store.bookmarks.find(bm => bm.id == bookmark_id);
+
+      if (!bookmark) {
+        return res
+          .logger.error(`Bookmark id: ${bookmark_id} not found`)
+          .status(404)
+          .send('Bookmark not found')
+      }
+      res
+        .json(bookmark)
+    })
+    .delete((req, res) => {
+      const { bookmark_id } = req.params;
+
+      const bookmarkIndex = store.bookmarks.findIndex(bm => bm.id == bookmark_id);
+
+      if (bookmarkIndex === -1) {
+        logger.error(`Bookmark id ${bookmark_id} not found`)
+        return res
+          .status(404)
+          .send('Bookmark not found')
+      }
+
+      store.bookmarks.splice(bookmarkIndex, 1);
+
+      logger.info(`Bookmark with id ${bookmark_id} deleted`)
+      return res
+        .status(204)
+        .end()
+    })
+
 module.exports = bookmarksRouter;
