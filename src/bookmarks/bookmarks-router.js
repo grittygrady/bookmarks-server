@@ -64,8 +64,8 @@ bookmarksRouter
       const bookmark = store.bookmarks.find(bm => bm.id == bookmark_id);
 
       if (!bookmark) {
+        logger.error(`Bookmark id: ${bookmark_id} not found`)
         return res
-          .logger.error(`Bookmark id: ${bookmark_id} not found`)
           .status(404)
           .send('Bookmark not found')
       }
