@@ -31,7 +31,7 @@ bookmarksRouter
         logger.error(`${field} is required`)
         return res
           .status(400)
-          .send(`${field} is required`)
+          .send(`'${field}' is required`)
       }
     }
 
@@ -48,7 +48,7 @@ bookmarksRouter
       logger.error(`Invalid url: ${url}`)
       return res
         .status(400)
-        .send(`${url} is not a valid URL. Please double check your spelling.`)
+        .send(`'url' must be a valid url`)
     }
 
     const bookmark = {
